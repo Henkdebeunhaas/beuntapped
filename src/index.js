@@ -1,13 +1,29 @@
-const http = require('http');
+const express = require('express');
+const app = express();
 
 const port = 3000;
+let list = [];
 
-const server = http.createServer(function(req, res) {
-    res.setHeader('Content-Type', 'text/plain');
-    res.write('Hello');
-    res.end();
+app.get('/beunhaas', function (req, res) {
+    res.send('beunhazen');
 });
 
-server.listen(port, function (){
-    console.log(`Server listening on port ${port}!`);
+app.get('/', function (req, res) {
+    res.send('je moeder');
+});
+
+app.post('/makestuff', function (req, res) {
+
+});
+
+app.put('/', function (req, res) {
+
+});
+
+app.delete('/', function (req, res) {
+
 })
+
+app.listen(port, function (){
+    console.log(`Listening on port ${port}`);
+});
