@@ -1,12 +1,16 @@
-import express from 'express';
+import express from "express";
 import statusCodes from 'http-status-codes';
+import cors from 'cors';
 import beerRouter from './routers/beer.js';
 import usersRouter from './routers/user.js';
 
 const app = express();
-
-app.use(express.json());
 const port = 3000;
+app.use(express.json());
+app.use(express.urlencoded({
+    extended: true
+}));
+app.use(cors());
 
 app.use('/beer', beerRouter);
 app.use('/user', usersRouter);
