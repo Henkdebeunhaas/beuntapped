@@ -1,4 +1,5 @@
 import statusCodes from "http-status-codes";
+import '../db/db.js';
 //temp beer object
 let beers = [{
         "brewery":"Hertog Jan",
