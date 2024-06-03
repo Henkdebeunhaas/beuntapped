@@ -1,5 +1,4 @@
 import express from "express";
-import statusCodes from 'http-status-codes';
 import cors from 'cors';
 import beerRouter from './routers/beer.js';
 import usersRouter from './routers/user.js';
