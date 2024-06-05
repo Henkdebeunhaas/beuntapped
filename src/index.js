@@ -1,5 +1,6 @@
 import express from "express";
 import cors from 'cors';
+//import db from 'db/db.js';
 import beerRouter from './routers/beer.js';
 import usersRouter from './routers/user.js';
 
@@ -10,6 +11,9 @@ app.use(express.urlencoded({
     extended: true
 }));
 app.use(cors());
+
+
+
 
 app.use('/beer', beerRouter);
 app.use('/user', usersRouter);
