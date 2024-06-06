@@ -1,5 +1,5 @@
 import statusCodes from "http-status-codes";
-import {getAllBeerQuery, addNewBeerQuery} from "../db/BeerQueries.js";
+import {getAllBeerQuery, addNewBeerQuery, getSingleBeerQuery} from "../db/BeerQueries.js";
 import db from "../db/db.js";
 //temp beer object
 let beers = [{
@@ -14,18 +14,17 @@ let beers = [{
     }];
 
 export function getAllBeers(req, res){
-
+    res.send(db.prepare(getAllBeerQuery).all());
 }
 
 export function getSingleBeer(req, res){
-
+    const beerID = req.body.id;
+    res.send(db.prepare(getSingleBeerQuery).get(beerID));
 }
 
 export function addBeer(req, res){
-    const beer = req.body;
     const insert = db.prepare(addNewBeerQuery)
     insert.run(req.body.brewery, req.body.style, req.body.percentage);
-    //beers.push({"brewery":beer.brewery, "style":beer.style, "percentage":beer.percentage});
     res.sendStatus(statusCodes.CREATED);
 }
 

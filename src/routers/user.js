@@ -4,6 +4,8 @@ const router = express.Router();
 
 router.get('/singleuser', userController.getUser);
 router.get('/allusers', userController.getAllUsers);
+router.get('/login', userController.loginUser)
+
 router.post('/make', userController.makeUser);
 
 export default router;

@@ -33,7 +33,6 @@ try {
 } catch (e){
     console.error('Error while initializing db', e);
     throw e;
-    //
 }
 
 export default db;

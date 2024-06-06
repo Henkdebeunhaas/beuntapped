@@ -1,9 +1,10 @@
 import express from "express";
 import cors from 'cors';
+
 //import db from 'db/db.js';
 import beerRouter from './routers/beer.js';
 import usersRouter from './routers/user.js';
-
+//const bcrypt = require('bcrypt');
 const app = express();
 const port = 3000;
 app.use(express.json());
