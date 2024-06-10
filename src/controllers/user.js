@@ -2,10 +2,12 @@ import statusCodes from "http-status-codes";
 import db from "../db/db.js";
 import * as query from '../db/UserQueries.js';
 import bcrypt from 'bcrypt';
+import {getSingleUserLoginQuery, singleUserQuery} from "../db/UserQueries.js";
 
 
 export function getUser(req, res){
-
+    //const user = ;
+    res.send(db.prepare(query.singleUserQuery).get(req.query.email));
 }
 
 export function getAllUsers(req, res){
@@ -22,17 +24,21 @@ export function makeUser(req, res){
             result
         );
     });
-
     res.sendStatus(statusCodes.CREATED);
 }
 
 export function loginUser(req, res){
-    const user = db.prepare(query.getSingleUserQuery).get(req.body.email);
-    bcrypt.compare(req.body.password, user.password, function (err, result){
-        if(result){res.send(true);}
-        else res.send(false);
+    const user = db.prepare(query.getSingleUserLoginQuery).get(req.body.email);
+    if(user == null) res.sendStatus(statusCodes.NOT_FOUND);
+    else{
+        bcrypt.compare(req.body.password, user.password, function (err, result){
+            if(result) res.sendStatus(statusCodes.OK)
+            else res.sendStatus(statusCodes.IM_A_TEAPOT)
+        });
+    }
 
-    })
 }
+
+
 
 
