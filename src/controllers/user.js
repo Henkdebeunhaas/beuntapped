@@ -2,8 +2,6 @@ import statusCodes from "http-status-codes";
 import db from "../db/db.js";
 import * as query from '../db/UserQueries.js';
 import bcrypt from 'bcrypt';
-import {getSingleUserLoginQuery, singleUserQuery} from "../db/UserQueries.js";
-
 
 export function getUser(req, res){
     //const user = ;
@@ -36,7 +34,6 @@ export function loginUser(req, res){
             else res.sendStatus(statusCodes.IM_A_TEAPOT)
         });
     }
-
 }
 
 

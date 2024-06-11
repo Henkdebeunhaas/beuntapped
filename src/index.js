@@ -4,6 +4,7 @@ import cors from 'cors';
 //import db from 'db/db.js';
 import beerRouter from './routers/beer.js';
 import usersRouter from './routers/user.js';
+import ratingRouter from './routers/rating.js';
 //const bcrypt = require('bcrypt');
 const app = express();
 const port = 3000;
@@ -18,6 +19,7 @@ app.use(cors());
 
 app.use('/beer', beerRouter);
 app.use('/user', usersRouter);
+app.use('/rate', ratingRouter);
 
 app.get('/', function (req, res) {
     res.send('je moeder');
