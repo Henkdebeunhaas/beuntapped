@@ -2,6 +2,7 @@ import statusCodes from "http-status-codes";
 import db from "../db/db.js";
 import * as query from '../db/UserQueries.js';
 import bcrypt from 'bcrypt';
+import {singleUserQuery} from "../db/UserQueries.js";
 
 export function getUser(req, res){
     //const user = ;
@@ -14,15 +15,23 @@ export function getAllUsers(req, res){
 
 export function makeUser(req, res){
     const insert = db.prepare(query.createUserQuery)
-
-    bcrypt.hash(req.body.password, 2, function (err, result){
-        insert.run(
-            req.body.email,
-            req.body.username,
-            result
-        );
-    });
-    res.sendStatus(statusCodes.CREATED);
+    console.log(req.body.registerUsername);
+    console.log(req.body.registerEmail);
+    console.log(req.body.registerPassword);
+    //res.sendStatus(statusCodes.OK);
+    if(db.prepare(query.singleUserQuery).get(req.body.registerEmail) != undefined){
+        res.sendStatus(statusCodes.CONFLICT);
+    } else {
+        /*bcrypt.hash(req.body.registerPassword, 2, function (err, result){
+            insert.run(
+                req.body.registerEmail,
+                req.body.registerUsername,
+                result
+            );
+        });*/
+        res.sendStatus(statusCodes.CREATED);
+        console.log(req.body.registerEmail);
+    }
 }
 
 export function loginUser(req, res){
