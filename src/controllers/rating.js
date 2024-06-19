@@ -17,7 +17,7 @@ export function getAllUserRating(req, res) {
 
 export function insertNewRating(req, res) {
     const insert = db.prepare(query.insertNewReviewQuery);
-
+    console.log(req.body);
     insert.run(
         req.body.userid,
         req.body.beerid,
@@ -26,4 +26,5 @@ export function insertNewRating(req, res) {
         req.body.description
     );
     res.sendStatus(statusCodes.CREATED);
+
 }
