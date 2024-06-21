@@ -1,6 +1,9 @@
 import express from 'express';
 import * as userController from '../controllers/user.js';
+import bodyParser from "body-parser";
 const router = express.Router();
+
+let urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.get('/singleuser', userController.getUser);
 router.get('/allusers', userController.getAllUsers);
