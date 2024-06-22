@@ -4,7 +4,7 @@ import * as query from '../db/RatingQueries.js';
 import {getAllRatingsFromUser} from "../db/RatingQueries.js";
 
 export function getAllRatings(req, res) {
-    res.send(db.prepare(query.getAllRatingsQuery).all());
+    res.send(db.prepare(query.beerRatingInnerJoinQuery).all());
 }
 
 export function getSingleUserRating(req, res) {
@@ -17,7 +17,7 @@ export function getAllUserRating(req, res) {
 
 export function insertNewRating(req, res) {
     const insert = db.prepare(query.insertNewReviewQuery);
-    console.log(req.body);
+    //console.log(req.body);
     insert.run(
         req.body.userid,
         req.body.beerid,
