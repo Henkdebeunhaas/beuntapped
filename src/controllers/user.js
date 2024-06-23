@@ -4,7 +4,9 @@ import * as query from '../db/UserQueries.js';
 import bcrypt from 'bcrypt';
 
 export function getUser(req, res){
-    res.send(db.prepare(query.singleUserQuery).get(req.query.email));
+    const user = db.prepare(query.singleUserQuery).get(req.query.email);
+    if(user == null) res.sendStatus(statusCodes.NOT_FOUND);
+    else res.send(user);
 }
 
 export function getAllUsers(req, res){
@@ -24,7 +26,7 @@ export function makeUser(req, res){
             );
         });
         res.sendStatus(statusCodes.CREATED);
-        console.log(req.body.registerEmail);
+        //console.log(req.body.registerEmail);
     }
 }
 
@@ -36,7 +38,7 @@ export function loginUser(req, res){
             if(result) {
                 res.sendStatus(statusCodes.OK);
             }
-            else res.sendStatus(statusCodes.IM_A_TEAPOT)
+            else res.sendStatus(statusCodes.CONFLICT)
         });
     }
 }

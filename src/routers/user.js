@@ -5,8 +5,8 @@ const router = express.Router();
 
 let urlencodedParser = bodyParser.urlencoded({ extended: false })
 
-router.get('/singleuser', userController.getUser);
-router.get('/allusers', userController.getAllUsers);
+router.get('/single', userController.getUser);
+router.get('/all', userController.getAllUsers);
 
 router.post('/login', userController.loginUser)
 router.post('/make', userController.makeUser);
