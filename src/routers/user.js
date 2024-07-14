@@ -1,15 +1,16 @@
 import express from 'express';
 import * as userController from '../controllers/user.js';
 import bodyParser from "body-parser";
+
 const router = express.Router();
 
-let urlencodedParser = bodyParser.urlencoded({ extended: false })
+let urlencodedParser = bodyParser.urlencoded({extended: false})
 
-router.get('/single', userController.getUser);
-router.get('/all', userController.getAllUsers);
+router.get('/email/:email', userController.getUser);
+router.get('/', userController.getAllUsers);
 
-router.post('/login', userController.loginUser)
-router.post('/make', userController.makeUser);
+//router.post('/login', userController.loginUser)
+router.post('/', userController.makeUser);
 
 const errorHandler = (err, req, res, next) => {
     console.error(err.stack);

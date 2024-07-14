@@ -1,12 +1,13 @@
 import express from 'express';
-//import db from '../db/db.js';
 import * as beerController from '../controllers/beer.js';
+
 const router = express.Router();
 
-router.get('/all', beerController.getAllBeers);
-router.get('/single', beerController.getSingleBeer);
-router.delete('/delete', beerController.deleteBeer);
-router.post('/add', beerController.addBeer);
+router.get('', beerController.getAllBeers);
+router.get('/:id', beerController.getSingleBeer);
+router.post('', beerController.addBeer);
+router.delete('/:id', beerController.deleteBeer);
+router.put('', beerController.updateBeer)
 
 const errorHandler = (err, req, res, next) => {
     console.error(err.stack);

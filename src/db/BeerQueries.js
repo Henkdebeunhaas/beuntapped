@@ -7,3 +7,7 @@ export const getSingleBeerQuery = `select * from beer where id=?`;
 export const deleteSingleBeerQuery = `delete from beer where id=?`;
 
 export const getBeerOnStyleQuery = `select * from beer where brewery=? and style=?`
+
+export const updateBeerQuery = `update beer
+set alcoholPercentage = ?
+where id = ?`;

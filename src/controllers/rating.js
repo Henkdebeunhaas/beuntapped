@@ -2,13 +2,14 @@ import statusCodes from "http-status-codes";
 import db from "../db/db.js";
 import * as query from '../db/RatingQueries.js';
 import {getAllRatingsFromUser} from "../db/RatingQueries.js";
+import * as queries from "../db/queryHelper.js";
 
 export function getAllRatings(req, res) {
-    res.send(db.prepare(query.beerRatingInnerJoinQuery).all());
+    res.send(queries.getAllRatings(req));
 }
 
 export function getSingleUserRating(req, res) {
-    res.send(db.prepare(query.getSingleRatingQuery).get(req.query.id))
+    res.send(queries.getSingleUserRating(req.query.id));
 }
 
 export function getAllUserRating(req, res) {
@@ -16,18 +17,5 @@ export function getAllUserRating(req, res) {
 }
 
 export function insertNewRating(req, res) {
-    const insert = db.prepare(query.insertNewReviewQuery);
-    const body = req.body;
-    if (body.userid == null || body.beerid == null || body.rating == null || body.flavourprofiles == null || body.description == null) {
-        res.sendStatus(statusCodes.BAD_REQUEST);
-    } else {
-        insert.run(
-            req.body.userid,
-            req.body.beerid,
-            req.body.rating,
-            req.body.flavourprofiles,
-            req.body.description
-        );
-        res.sendStatus(statusCodes.CREATED);
-    }
+    res.sendStatus(queries.insertNewRating(req.body));
 }

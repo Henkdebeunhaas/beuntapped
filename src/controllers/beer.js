@@ -1,40 +1,34 @@
 import statusCodes from "http-status-codes";
-import {getAllBeerQuery, addNewBeerQuery, getSingleBeerQuery, deleteSingleBeerQuery, getBeerOnStyleQuery} from "../db/BeerQueries.js";
+import * as query from '../db/queryHelper.js';
 import db from "../db/db.js";
 
 export function getAllBeers(req, res) {
-    res.send(db.prepare(getAllBeerQuery).all());
+    res.send(query.getAllBeers());
 }
 
 export function getSingleBeer(req, res) {
-    const beerID = req.query.id;
-    const beer = db.prepare(getSingleBeerQuery).get(beerID)
-    if(beer == null) {
-        res.sendStatus(statusCodes.NOT_FOUND);
-    } else {
-        res.send(beer);
-    }
+    if(Number.isInteger(req.params.id)){
+        const beer = query.getSingleBeer(req.params.id);
+        if (beer == null) {
+            res.sendStatus(statusCodes.NOT_FOUND);
+        } else {
+            res.send(beer);
+        }
+    } else res.sendStatus(statusCodes.BAD_REQUEST);
 }
 
 export function addBeer(req, res) {
-    const duplicateCheck = db.prepare(getBeerOnStyleQuery).get(req.body.brewery, req.body.style);
-    if(duplicateCheck != null){
-        res.sendStatus(statusCodes.CONFLICT);
-    } else {
-        const insert = db.prepare(addNewBeerQuery)
-        insert.run(req.body.brewery, req.body.style, req.body.percentage);
-        res.sendStatus(statusCodes.CREATED);
-    }
+    res.sendStatus(query.postNewBeer(req.body));
 
 }
 
 export function deleteBeer(req, res) {
-    const beerID = req.query.id;
-    const beer = db.prepare(getSingleBeerQuery).get(beerID);
-    if(beer == null) res.sendStatus(statusCodes.NOT_FOUND);
-    else {
-        db.prepare(deleteSingleBeerQuery).run(beer.id);
-        res.sendStatus(statusCodes.OK);
-    }
+    if(Number.isInteger(req.params.id)){
+        res.sendStatus(query.deleteBeer(req.params.id));
+    } else res.sendStatus(statusCodes.BAD_REQUEST);
+}
+
+export function updateBeer(req, res) {
+    res.sendStatus(query.updateBeer(req.body));
 }
 
